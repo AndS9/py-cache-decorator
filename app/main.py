@@ -1,21 +1,15 @@
 from typing import Callable, Any
-# from functools import wraps
 
 
 def cache(func: Callable) -> Callable:
-    # @wraps(func)
     cache_results = {}
 
-    def inner(*args, **kwargs) -> Any:
-        if kwargs:
-            print("This function can't operate with keyword arguments")
-            return None
-
-        if args in cache_results.keys():
+    def inner(*args) -> Any:
+        if args in cache_results:
             print("Getting from cache")
             return cache_results[args]
 
-        result = func(*args, **kwargs)
+        result = func(*args)
         cache_results[args] = result
         print("Calculating new result")
         return result
